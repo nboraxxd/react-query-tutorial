@@ -1,25 +1,43 @@
 import React from 'react'
-import Loading from '../components/Loading';
+import { useQuery } from '@tanstack/react-query'
+import * as Servives from '../services'
+import Loading from '../components/Loading'
 
 const ReactQueryPostPage = () => {
-  const isLoading = false;
-  const isError = false;
-  const listPost = []
-  if(isLoading) {
+  const fetchPosts = async () => {
+    const res = await Servives.getAllPosts()
+    if (res) {
+      return res.data
+    }
+  }
+
+  const {
+    data: listPost,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['posts'],
+    queryFn: fetchPosts,
+  })
+
+  if (isLoading) {
     return <Loading />
   }
 
-  if(isError) {
+  if (isError) {
     return <h1>Error</h1>
   }
+
   return (
-    <div className='content'>
+    <div className="content">
       <h1>ReactQueryPostPage</h1>
       {listPost.map((post) => {
-          return (
-            <div className='post__name' key={post.id}>{post.title}</div>
-          )
-        })}
+        return (
+          <div className="post__name" key={post.id}>
+            {post.title}
+          </div>
+        )
+      })}
     </div>
   )
 }
