@@ -6,18 +6,30 @@ import Loading from '../components/Loading'
 const ReactQueryPostPage = () => {
   const fetchPosts = async () => {
     const res = await Servives.getAllPosts()
-    if (res) {
-      return res.data
-    }
+    return res.data
   }
 
+  // const {
+  //   data: listPost,
+  //   isLoading,
+  //   isError,
+  // } = useQuery({
+  //   queryKey: ['posts'],
+  //   queryFn: fetchPosts,
+  //   retry: 2,
+  //   retryDelay: 2000,
+  //   retryOnMount: false,
+  // })
+
+  // Shorthand of useQuery
   const {
     data: listPost,
     isLoading,
     isError,
-  } = useQuery({
-    queryKey: ['posts'],
-    queryFn: fetchPosts,
+  } = useQuery(['posts'], fetchPosts, {
+    retry: 2,
+    retryDelay: 2000,
+    retryOnMount: false,
   })
 
   if (isLoading) {

@@ -20,7 +20,7 @@ function App() {
           <Route path="/" element={<HomePage />}></Route>
         </Routes>
       </Router>
-      <ReactQueryDevtools position="bottom-right" />
+      <ReactQueryDevtools />
     </QueryClientProvider>
   )
 }

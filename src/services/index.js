@@ -1,16 +1,20 @@
-import axios from "axios"
+import axios from 'axios'
 
 const getAllPosts = async () => {
-  const res = await axios.get('http://localhost:3001/posts')
-  return {
-    status: res?.status,
-    statusText: res.statusText,
-    data: res?.data?.map((post) => {
-      return {
-        ...post,
-        body: post?.body?.substring(0, 50) + (post?.body?.length > 50 ? '...' : '')
-      }
-    })
+  try {
+    const res = await axios.get('http://localhost:3001/posts')
+    return {
+      status: res?.status,
+      statusText: res.statusText,
+      data: res?.data?.map((post) => {
+        return {
+          ...post,
+          body: post?.body?.substring(0, 50) + (post?.body?.length > 50 ? '...' : ''),
+        }
+      }),
+    }
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -19,7 +23,7 @@ const getDetailsPost = async (idPost) => {
   return {
     status: res?.status,
     statusText: res.statusText,
-    data: res?.data
+    data: res?.data,
   }
 }
 
@@ -36,13 +40,8 @@ const updatePost = async (idPost, data) => {
   return {
     status: res?.status,
     statusText: res.statusText,
-    data: res?.data
+    data: res?.data,
   }
 }
 
-export {
-  getAllPosts,
-  getDetailsPost,
-  deletePost,
-  updatePost
-}
+export { getAllPosts, getDetailsPost, deletePost, updatePost }
