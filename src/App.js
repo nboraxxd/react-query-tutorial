@@ -11,7 +11,7 @@ function App() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        refetchOnMount: true,
+        refetchOnReconnect: false,
       },
     },
   })

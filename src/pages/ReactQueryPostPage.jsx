@@ -15,7 +15,7 @@ const ReactQueryPostPage = () => {
   } = useQuery({
     queryKey: ['posts'],
     queryFn: fetchPosts,
-    refetchOnMount: false,
+    refetchOnReconnect: true,
   })
 
   if (isLoading) {
