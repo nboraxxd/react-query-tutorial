@@ -11,8 +11,7 @@ function App() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        refetchOnWindowFocus: true,
-        refetchInterval: 2000,
+        refetchOnMount: true,
       },
     },
   })
