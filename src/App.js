@@ -10,9 +10,7 @@ import ReactPostPage from './pages/ReactPostPage'
 function App() {
   const queryClient = new QueryClient({
     defaultOptions: {
-      queries: {
-        refetchOnReconnect: false,
-      },
+      queries: {},
     },
   })
 
