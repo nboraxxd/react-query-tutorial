@@ -8,7 +8,13 @@ import ReactQueryPostPage from './pages/ReactQueryPostPage'
 import ReactPostPage from './pages/ReactPostPage'
 
 function App() {
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: true,
+      },
+    },
+  })
 
   return (
     <QueryClientProvider client={queryClient}>

@@ -1,27 +1,24 @@
+import { useQuery } from '@tanstack/react-query'
 import React from 'react'
-import { useQuery, useIsFetching } from '@tanstack/react-query'
-import * as Servives from '../services'
 import Loading from '../components/Loading'
+import * as Servives from '../services'
 
 const ReactQueryPostPage = () => {
   const fetchPosts = async () => {
     const res = await Servives.getAllPosts()
     return res.data
   }
-
-  const fetchingCount = useIsFetching()
-
   const {
     data: listPost,
     isLoading,
     isError,
-    isFetching,
   } = useQuery({
     queryKey: ['posts'],
     queryFn: fetchPosts,
     retry: 2,
     retryDelay: 2000,
     retryOnMount: false,
+    refetchOnWindowFocus: false,
   })
 
   if (isLoading) {
@@ -31,8 +28,6 @@ const ReactQueryPostPage = () => {
   if (isError) {
     return <h1>Error</h1>
   }
-
-  console.log('🔥 ~ ReactQueryPostPage ~ fetchingCount ~ isFetching:', fetchingCount, isFetching)
 
   return (
     <div className="content">
