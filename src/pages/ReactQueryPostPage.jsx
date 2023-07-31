@@ -19,6 +19,7 @@ const ReactQueryPostPage = () => {
     retryDelay: 2000,
     retryOnMount: false,
     refetchOnWindowFocus: false,
+    refetchInterval: 4000,
   })
 
   if (isLoading) {

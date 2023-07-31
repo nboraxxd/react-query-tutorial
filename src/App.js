@@ -12,6 +12,7 @@ function App() {
     defaultOptions: {
       queries: {
         refetchOnWindowFocus: true,
+        refetchInterval: 2000,
       },
     },
   })
