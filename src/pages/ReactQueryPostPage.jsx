@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useIsFetching } from '@tanstack/react-query'
 import * as Servives from '../services'
 import Loading from '../components/Loading'
 
@@ -9,24 +9,16 @@ const ReactQueryPostPage = () => {
     return res.data
   }
 
-  // const {
-  //   data: listPost,
-  //   isLoading,
-  //   isError,
-  // } = useQuery({
-  //   queryKey: ['posts'],
-  //   queryFn: fetchPosts,
-  //   retry: 2,
-  //   retryDelay: 2000,
-  //   retryOnMount: false,
-  // })
+  const fetchingCount = useIsFetching()
 
-  // Shorthand of useQuery
   const {
     data: listPost,
     isLoading,
     isError,
-  } = useQuery(['posts'], fetchPosts, {
+    isFetching,
+  } = useQuery({
+    queryKey: ['posts'],
+    queryFn: fetchPosts,
     retry: 2,
     retryDelay: 2000,
     retryOnMount: false,
@@ -39,6 +31,8 @@ const ReactQueryPostPage = () => {
   if (isError) {
     return <h1>Error</h1>
   }
+
+  console.log('🔥 ~ ReactQueryPostPage ~ fetchingCount ~ isFetching:', fetchingCount, isFetching)
 
   return (
     <div className="content">
