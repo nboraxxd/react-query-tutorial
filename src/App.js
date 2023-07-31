@@ -1,6 +1,7 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import HomePage from './pages/HomePage'
 import Header from './components/Header'
 import ReactQueryPostPage from './pages/ReactQueryPostPage'
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<HomePage />}></Route>
         </Routes>
       </Router>
+      <ReactQueryDevtools position="bottom-right" />
     </QueryClientProvider>
   )
 }
