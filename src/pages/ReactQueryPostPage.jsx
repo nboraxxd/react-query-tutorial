@@ -1,13 +1,20 @@
 import { useQuery } from '@tanstack/react-query'
-import React from 'react'
+import React, { useState } from 'react'
 import Loading from '../components/Loading'
 import * as Servives from '../services'
 
 const ReactQueryPostPage = () => {
+  const [isClicked, setIsClicked] = useState(false)
+
+  const onClick = () => {
+    setIsClicked(true)
+  }
+
   const fetchPosts = async () => {
     const res = await Servives.getAllPosts()
     return res.data
   }
+
   const {
     data: listPost,
     isLoading,
@@ -15,12 +22,16 @@ const ReactQueryPostPage = () => {
   } = useQuery({
     queryKey: ['posts'],
     queryFn: fetchPosts,
-    cacheTime: 5000,
-    staleTime: 10000
+    enabled: isClicked,
   })
 
   if (isLoading) {
-    return <Loading />
+    return (
+      <>
+        <button onClick={onClick}>Call API</button>
+        <Loading />
+      </>
+    )
   }
 
   if (isError) {
@@ -29,6 +40,7 @@ const ReactQueryPostPage = () => {
 
   return (
     <div className="content">
+      <button onClick={onClick}>Call API</button>
       <h1>ReactQueryPostPage</h1>
       {listPost.map((post) => {
         return (
