@@ -10,7 +10,9 @@ import ReactPostPage from './pages/ReactPostPage'
 function App() {
   const queryClient = new QueryClient({
     defaultOptions: {
-      queries: {},
+      queries: {
+        staleTime: 5000,
+      },
     },
   })
 
