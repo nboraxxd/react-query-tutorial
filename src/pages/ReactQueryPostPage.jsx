@@ -30,7 +30,7 @@ const ReactQueryPostPage = () => {
   } = useQuery({
     queryKey: ['posts'],
     queryFn: fetchPosts,
-    initialData,
+    placeholderData: initialData,
   })
 
   if (isLoading) {
