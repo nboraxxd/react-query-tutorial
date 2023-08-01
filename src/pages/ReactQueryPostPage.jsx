@@ -2,6 +2,21 @@ import { useQuery } from '@tanstack/react-query'
 import Loading from '../components/Loading'
 import * as Servives from '../services'
 
+const initialData = [
+  {
+    userId: 1,
+    id: 1,
+    title: 'Ai biet gi daoo',
+    body: 'Anh cung hong bet nuaaa',
+  },
+  {
+    userId: 1,
+    id: 2,
+    title: 'Ngoi khong thi cung chan',
+    body: 'Ma hoc bai thi luoii',
+  },
+]
+
 const ReactQueryPostPage = () => {
   const fetchPosts = async () => {
     const res = await Servives.getAllPosts()
@@ -15,16 +30,7 @@ const ReactQueryPostPage = () => {
   } = useQuery({
     queryKey: ['posts'],
     queryFn: fetchPosts,
-    retry: 2,
-    onSuccess: () => {
-      console.log('thanh cong rui ban oi')
-    },
-    onError: () => {
-      console.log('that bai rui huhu')
-    },
-    onSettled: () => {
-      console.log('du sao thi cung phai move on ban nhe')
-    }
+    initialData,
   })
 
   if (isLoading) {
