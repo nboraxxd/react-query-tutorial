@@ -4,8 +4,8 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import HomePage from './pages/HomePage'
 import Header from './components/Header'
-import ReactQueryPostPage from './pages/ReactQueryPostPage'
-import ReactPostPage from './pages/ReactPostPage'
+import { ReactQueryPostDetail, ReactQueryPostPage } from './pages/ReactQuery'
+import { ReactPostDetail, ReactPostPage } from './pages/PureReact'
 
 function App() {
   const queryClient = new QueryClient({
@@ -19,9 +19,11 @@ function App() {
       <Router>
         <Header />
         <Routes>
-          <Route path="/react-query" element={<ReactQueryPostPage />}></Route>
-          <Route path="/react" element={<ReactPostPage />}></Route>
-          <Route path="/" element={<HomePage />}></Route>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/react" element={<ReactPostPage />} />
+          <Route path="/react/:id" element={<ReactPostDetail />} />
+          <Route path="/react-query" element={<ReactQueryPostPage />} />
+          <Route path="/react-query/:id" element={<ReactQueryPostDetail />} />
         </Routes>
       </Router>
       <ReactQueryDevtools />

@@ -1,5 +1,6 @@
-import Loading from '../components/Loading'
-import useQueryPosts from '../hooks/useQueryPosts'
+import { Link } from 'react-router-dom'
+import Loading from '../../components/Loading'
+import useQueryPosts from '../../hooks/useQueryPosts'
 
 const ReactQueryPostPage = () => {
   const {
@@ -26,9 +27,9 @@ const ReactQueryPostPage = () => {
       <h1>ReactQueryPostPage</h1>
       {listPost.map((post) => {
         return (
-          <div className="post__name" key={post.id}>
+          <Link to={`/react-query/${post.id}`} className="post__name" key={post.id}>
             {post.name}
-          </div>
+          </Link>
         )
       })}
     </div>

@@ -1,4 +1,9 @@
-body,h1 {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body,
+h1 {
   margin: 0;
 }
 
