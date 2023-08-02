@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Loading from '../../components/Loading'
 import useQueryPosts from '../../hooks/useQueryPosts'
 
 const ReactQueryPostPage = () => {
   const [page, setPage] = useState(1)
+  const navigate = useNavigate()
 
   const {
     isError,
@@ -19,13 +20,18 @@ const ReactQueryPostPage = () => {
 
   const { data: listPost } = response || {}
 
-  if (isLoading) {
-    return <Loading />
+  const handlePrevBtn = () => {
+    page > 1 && setPage(page - 1)
+    navigate(`/react-query?page=${page - 1}`)
   }
 
-  if (isError) {
-    return <h1>Error</h1>
+  const handleNextBtn = () => {
+    page < response?.totalPage && setPage(page + 1)
+    navigate(`/react-query?page=${page + 1}`)
   }
+
+  if (isLoading) return <Loading />
+  if (isError) return <h1>Error</h1>
 
   return (
     <div className="content">
@@ -40,17 +46,13 @@ const ReactQueryPostPage = () => {
             )
           })}
           <div className="flex gap-4">
-            <button
-              className="disabled:text-gray-300"
-              onClick={() => page > 1 && setPage(page - 1)}
-              disabled={page <= 1}
-            >
+            <button className="disabled:text-gray-300" onClick={handlePrevBtn} disabled={page <= 1}>
               Prev
             </button>
             <p>{page}</p>
             <button
               className="disabled:text-gray-300"
-              onClick={() => page < response?.totalPage && setPage(page + 1)}
+              onClick={handleNextBtn}
               disabled={page >= response?.totalPage}
             >
               Next

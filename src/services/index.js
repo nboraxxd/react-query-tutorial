@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const getAllPosts = async (page = 1, limit = 3) => {
   try {
-    const res = await axios.get(`http://localhost:3001/posts?_limit=${limit}&_page=${page}`)
+    const res = await axios.get(`http://localhost:3001/posts?_page=${page}&_limit=${limit}`)
     const resTotal = 14
     return {
       status: res?.status,
@@ -13,6 +13,7 @@ const getAllPosts = async (page = 1, limit = 3) => {
           body: post?.body?.substring(0, 50) + (post?.body?.length > 50 ? '...' : ''),
         }
       }),
+      currentPage: page,
       totalPage: Math.ceil(resTotal / limit),
     }
   } catch (error) {
