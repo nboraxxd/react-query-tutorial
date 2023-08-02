@@ -1,15 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
 import * as Services from '../services'
 
-export default function useQueryPosts(rests) {
-  const fetchPosts = async () => {
-    const res = await Services.getAllPosts()
-    return res.data
-  }
-
+const fetchPosts = async (page) => {
+  const res = await Services.getAllPosts(page)
+  return res
+}
+export default function useQueryPosts({ page, ...rests }) {
   return useQuery({
-    queryKey: ['posts'],
-    queryFn: fetchPosts,
+    queryKey: ['posts', page],
+    queryFn: () => fetchPosts(page),
     ...rests,
   })
 }
