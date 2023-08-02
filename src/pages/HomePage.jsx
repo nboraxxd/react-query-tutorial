@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import classNames from 'classnames'
 
 const HomePage = () => {
-  const fetchAllPost = async ({ pageParam }) => {
+  const fetchAllPost = async ({ pageParam = 5 }) => {
     try {
       const response = await Services.getAllPosts(pageParam)
       return {
@@ -24,21 +24,18 @@ const HomePage = () => {
     isError,
     isLoading,
     isSuccess,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
+    fetchPreviousPage,
+    hasPreviousPage,
   } = useInfiniteQuery({
     queryKey: ['posts'],
     queryFn: fetchAllPost,
     refetchOnWindowFocus: false,
-    getNextPageParam: (lastPage) => {
+    getPreviousPageParam: (lastPage) => {
       console.log(lastPage)
-      if (lastPage.currentPage >= lastPage.totalPage) return
-      else return lastPage.currentPage + 1
+      if (lastPage.currentPage <= 1) return
+      else return lastPage.currentPage - 1
     },
   })
-
-  console.log(isFetchingNextPage)
 
   if (isLoading) {
     return <Loading />
@@ -58,7 +55,7 @@ const HomePage = () => {
             posts.data.map((post) => {
               return (
                 <Link to={`/react-query/${post.id}`} className="post__name" key={post.id}>
-                  {post.title}
+                  {`${post.id} - ${post.title}`}
                 </Link>
               )
             })
@@ -68,12 +65,12 @@ const HomePage = () => {
               'w-36 rounded-lg bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 mx-auto px-5 py-2.5 text-center text-sm font-medium text-white shadow-lg shadow-teal-500/50',
               {
                 'hover:bg-gradient-to-br focus:outline-none focus:ring-4 focus:ring-teal-300':
-                  hasNextPage,
-                'opacity-60': !hasNextPage,
+                  hasPreviousPage,
+                'opacity-60': !hasPreviousPage,
               }
             )}
-            onClick={() => fetchNextPage()}
-            disabled={!hasNextPage}
+            onClick={() => fetchPreviousPage()}
+            disabled={!hasPreviousPage}
           >
             Load more
           </button>
