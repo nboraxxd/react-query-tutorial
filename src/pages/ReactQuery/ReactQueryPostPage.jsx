@@ -13,7 +13,8 @@ const ReactQueryPostPage = () => {
     data: response,
   } = useQueryPosts({
     page,
-    staleTime: 2000,
+    keepPreviousData: true,
+    staleTime: 5000,
   })
 
   const { data: listPost } = response || {}
