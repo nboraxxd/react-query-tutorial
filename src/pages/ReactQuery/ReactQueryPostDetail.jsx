@@ -2,7 +2,7 @@ import React from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import Loading from '../../components/Loading'
 import useQueryPost from '../../hooks/useQueryPost'
-import { useQueries } from '@tanstack/react-query'
+import { useQueries, useQueryClient } from '@tanstack/react-query'
 import * as Services from '../../services'
 
 export default function ReactQueryPostDetail() {
@@ -14,7 +14,22 @@ export default function ReactQueryPostDetail() {
     return res.data
   }
 
-  const { data: post, isLoading, isError, isSuccess } = useQueryPost({ id, staleTime: 2000 })
+  const queryClient = useQueryClient()
+
+  const {
+    data: post,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useQueryPost({
+    id,
+    staleTime: 2000,
+    initialData: () => {
+      return queryClient
+        .getQueryData(['posts'], { exact: false })
+        ?.data?.find((item) => Number(item?.id) === Number(id))
+    },
+  })
 
   const queries = useQueries({
     queries: userIdList.map((userId) => ({
@@ -45,8 +60,8 @@ export default function ReactQueryPostDetail() {
         </div>
         <div>
           <h2 className="font-medium text-lg">User seen:</h2>
-          {queries.map((user) => (
-            <p key={user?.data?.id}>{user?.data?.name}</p>
+          {queries.map((user, index) => (
+            <p key={index}>{user?.data?.name}</p>
           ))}
         </div>
       </div>

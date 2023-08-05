@@ -10,7 +10,9 @@ import { ReactPostDetail, ReactPostPage } from './pages/PureReact'
 function App() {
   const queryClient = new QueryClient({
     defaultOptions: {
-      queries: {},
+      queries: {
+        refetchOnWindowFocus: false,
+      },
     },
   })
 

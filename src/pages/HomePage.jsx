@@ -7,9 +7,7 @@ const HomePage = () => {
     ['posts', 4],
   ]
 
-  const data = queryKeys.map((queryKey) => queryClient.getQueryData(queryKey))
-  console.log('🔥 ~ HomePage ~ queryClient:', data)
-
+  queryKeys.map((queryKey) => queryClient.getQueryData(queryKey))
   const handleClearCache = () => {
     const arrClear = [
       ['posts', 2],
