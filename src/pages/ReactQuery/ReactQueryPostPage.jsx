@@ -40,7 +40,12 @@ const ReactQueryPostPage = () => {
         <>
           {listPost?.map((post) => {
             return (
-              <Link to={`/react-query/${post.id}`} className="post__name" key={post.id}>
+              <Link
+                to={`/react-query/${post.id}`}
+                state={[2, 4]}
+                className="post__name"
+                key={post.id}
+              >
                 {post.title}
               </Link>
             )

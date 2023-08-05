@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import * as Servives from '../../services/index'
 import Loading from '../../components/Loading'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const ReactPostPage = () => {
   const [listPost, setListPost] = useState([])
@@ -10,6 +10,13 @@ const ReactPostPage = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [page, setPage] = useState(1)
   const [totalPage, setTotalPage] = useState(null)
+  const navigate = useNavigate()
+
+  const handleNavigate = (postId) => {
+    navigate(`/react/${postId}`, {
+      state: [2, 4],
+    })
+  }
 
   const fetchAllPost = async (page) => {
     setIsLoading(true)
@@ -49,9 +56,9 @@ const ReactPostPage = () => {
         <>
           {listPost?.map((post) => {
             return (
-              <Link to={`/react/${post.id}`} className="post__name" key={post.id}>
+              <div onClick={() => handleNavigate(post.id)} className="post__name" key={post.id}>
                 {post.title}
-              </Link>
+              </div>
             )
           })}
           <div className="flex gap-4">

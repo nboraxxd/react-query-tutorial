@@ -1,5 +1,14 @@
 import axios from 'axios'
 
+const getDetailUser = async (id) => {
+  const res = await axios.get(`http://localhost:3001/users/${id}`)
+  return {
+    status: res?.status,
+    statusText: res.statusText,
+    data: res?.data,
+  }
+}
+
 const getAllPosts = async (page = 1, limit = 3) => {
   try {
     const res = await axios.get(`http://localhost:3001/posts?_page=${page}&_limit=${limit}`)
@@ -47,4 +56,4 @@ const updatePost = async (idPost, data) => {
   }
 }
 
-export { getAllPosts, getDetailsPost, deletePost, updatePost }
+export { getAllPosts, getDetailsPost, deletePost, updatePost, getDetailUser }
